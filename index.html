@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClearCity - Empowering Citizens, Building Better Cities</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="logo-animation">
+                <h1 class="loading-logo">ClearCity</h1>
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h2>ClearCity</h2>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active" data-section="home">Home</a>
+                <a href="#events" class="nav-link" data-section="events">Events</a>
+                <a href="#report" class="nav-link" data-section="report">Report</a>
+                <a href="#traffic" class="nav-link" data-section="traffic">Traffic</a>
+                <a href="#social" class="nav-link" data-section="social">Social</a>
+                <a href="#rewards" class="nav-link" data-section="rewards">Rewards</a>
+                <button class="btn btn--primary login-btn" id="login-btn">Login</button>
+            </div>
+            <div class="nav-mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="hero-section active-section">
+            <div class="hero-background">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Empowering Citizens, Building Better Cities</h1>
+                    <p class="hero-subtitle">Stay informed about events, report civic issues, and join community initiatives across India's cities and villages.</p>
+                    <div class="hero-cta">
+                        <button class="btn btn--primary btn--lg" id="explore-btn">Explore Cities</button>
+                        <button class="btn btn--outline btn--lg" id="join-btn">Join Community</button>
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">258</div>
+                        <div class="stat-label">Active Events</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">47</div>
+                        <div class="stat-label">Issues Resolved</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1.6K</div>
+                        <div class="stat-label">Community Members</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- City Selection Cards -->
+            <div class="cities-grid">
+                <div class="city-card" data-city="bangalore">
+                    <img src="https://pplx-res.cloudinary.com/image/upload/v1755196974/pplx_project_search_images/708ba65f297b479cb7fecb36e264861649536163.png" alt="Bangalore">
+                    <div class="city-info">
+                        <h3>Bangalore</h3>
+                        <p>45 Events • 234 Volunteers</p>
+                    </div>
+                </div>
+                <div class="city-card" data-city="delhi">
+                    <img src="https://pplx-res.cloudinary.com/image/upload/v1754680567/pplx_project_search_images/a6cf7f2a8fc141a00d305035a225f6120ae3249b.png" alt="Delhi">
+                    <div class="city-info">
+                        <h3>Delhi</h3>
+                        <p>67 Events • 445 Volunteers</p>
+                    </div>
+                </div>
+                <div class="city-card" data-city="mumbai">
+                    <img src="https://pplx-res.cloudinary.com/image/upload/v1759495533/pplx_project_search_images/aeb5883b5bc5474a46a9b3e511224534d0ddd7cf.png" alt="Mumbai">
+                    <div class="city-info">
+                        <h3>Mumbai</h3>
+                        <p>89 Events • 567 Volunteers</p>
+                    </div>
+                </div>
+                <div class="city-card" data-city="indore">
+                    <img src="https://pplx-res.cloudinary.com/image/upload/v1756106612/pplx_project_search_images/8b73520a67fe023f4a63e6abcb3b31f977cbae73.png" alt="Indore">
+                    <div class="city-info">
+                        <h3>Indore</h3>
+                        <p>23 Events • 123 Volunteers</p>
+                    </div>
+                </div>
+                <div class="city-card" data-city="kolkata">
+                    <img src="https://pplx-res.cloudinary.com/image/upload/v1756986424/pplx_project_search_images/395c25b8233e9be5d29e007e8611f37120d1c62f.png" alt="Kolkata">
+                    <div class="city-info">
+                        <h3>Kolkata</h3>
+                        <p>34 Events • 289 Volunteers</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="content-section">
+            <div class="section-header">
+                <h2>Discover Events</h2>
+                <p>Find events happening in your city for all ages and occupations</p>
+            </div>
+            <div class="events-filters">
+                <select class="form-control" id="city-filter">
+                    <option value="">All Cities</option>
+                    <option value="bangalore">Bangalore</option>
+                    <option value="delhi">Delhi</option>
+                    <option value="mumbai">Mumbai</option>
+                    <option value="indore">Indore</option>
+                    <option value="kolkata">Kolkata</option>
+                </select>
+                <select class="form-control" id="category-filter">
+                    <option value="">All Categories</option>
+                    <option value="students">Students</option>
+                    <option value="corporate">Corporate</option>
+                    <option value="government">Government</option>
+                </select>
+            </div>
+            <div class="events-grid" id="events-grid">
+                <!-- Events will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Report Issues Section -->
+        <section id="report" class="content-section">
+            <div class="section-header">
+                <h2>Report Civic Issues</h2>
+                <p>Help improve your city by reporting problems and tracking solutions</p>
+            </div>
+            <div class="report-container">
+            
+                <div class="report-form">
+                    <form id="issue-form">
+                        <div class="form-group">
+                            <label class="form-label">Issue Title</label>
+                            <input type="text" class="form-control" id="issue-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">City</label>
+                            <select class="form-control" id="issue-city" required>
+                                <option value="">Select City</option>
+                                <option value="bangalore">Bangalore</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="indore">Indore</option>
+                                <option value="kolkata">Kolkata</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Priority</label>
+                            <select class="form-control" id="issue-priority" required>
+                                <option value="">Select Priority</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="critical">Critical</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="issue-description" rows="4" required></textarea>
+                        </div>
+                        <div id="report-map" style="height: 220px; width: 100%; border-radius: 12px; margin-bottom: 1.2rem;"></div>
+                        <button type="submit" class="btn btn--primary btn--full-width">Submit Report</button>
+                    </form>
+                </div>
+                <div class="issues-dashboard">
+                    <h3>Recent Issues</h3>
+                    <div class="issues-list" id="issues-list">
+                        <!-- Issues will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Traffic Map Section -->
+        <section id="traffic" class="content-section">
+            <div class="section-header">
+                <h2>Smart Navigation</h2>
+                <p>AI-powered route optimization considering real-time traffic and user reports</p>
+            </div>
+            <div class="traffic-dashboard">
+                <div id="map" style="height: 400px; width: 100%; border-radius: 12px;"></div>
+                <div class="traffic-stats">
+                     <!-- Route Planner -->
+                    <div id="routing-form">
+                        <h3 style="margin-bottom: 1rem;">Plan Your Route</h3>
+                        <p class="hero-subtitle" style="margin-bottom: 1.5rem; font-size: 1rem;">Enter a starting and ending location to find the best route. You can also click on the map.</p>
+                        <div class="form-group">
+                            <label class="form-label" for="start-location-input">Start Point</label>
+                            <input type="text" id="start-location-input" class="form-control" placeholder="e.g., Cubbon Park, Bangalore">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="end-location-input">End Point</label>
+                            <input type="text" id="end-location-input" class="form-control" placeholder="e.g., Lalbagh Botanical Garden, Bangalore">
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button id="find-route-btn" type="button" class="btn btn--primary" style="flex: 1;">Find Route</button>
+                            <button id="clear-route-btn" type="button" class="btn btn--outline" style="flex: 1;">Clear Route</button>
+                        </div>
+                    </div>
+                    <div class="chart-container" style="height: 300px; position: relative; margin-top: 2rem;">
+                        <canvas id="trafficChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Service Section -->
+        <section id="social" class="content-section">
+            <div class="section-header">
+                <h2>Social Service Hub</h2>
+                <p>Join community initiatives and help those in need</p>
+            </div>
+            <div class="social-grid">
+                <div class="service-card">
+                    <h3>Food Distribution</h3>
+                    <p>Help distribute food to underprivileged communities</p>
+                    <div class="service-stats">
+                        <span>Next Event: Tomorrow 10 AM</span>
+                        <span>45 Volunteers Needed</span>
+                    </div>
+                    <button class="btn btn--primary">Join Initiative</button>
+                </div>
+                <div class="service-card">
+                    <h3>Education Support</h3>
+                    <p>Teach children who don't have access to quality education</p>
+                    <div class="service-stats">
+                        <span>Every Weekend</span>
+                        <span>23 Volunteers Needed</span>
+                    </div>
+                    <button class="btn btn--primary">Join Initiative</button>
+                </div>
+                <div class="service-card">
+                    <h3>Environmental Cleanup</h3>
+                    <p>Help clean parks, beaches, and public spaces</p>
+                    <div class="service-stats">
+                        <span>Weekly Events</span>
+                        <span>67 Volunteers Needed</span>
+                    </div>
+                    <button class="btn btn--primary">Join Initiative</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rewards Section -->
+        <section id="rewards" class="content-section">
+            <div class="section-header">
+                <h2>Reward System</h2>
+                <p>Earn points for contributing to your community</p>
+            </div>
+            <div class="rewards-dashboard">
+                <div class="user-profile">
+                    <div class="profile-avatar"></div>
+                    <div class="profile-info">
+                        <h3>Your Profile</h3>
+                        <div class="points-display">
+                            <span class="points-number">1,250</span>
+                            <span class="points-label">Reward Points</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="rewards-grid">
+                    <div class="reward-card">
+                        <h4>Event Reporter</h4>
+                        <p>Report 5 local events</p>
+                        <div class="reward-points">+50 points</div>
+                    </div>
+                    <div class="reward-card">
+                        <h4>Issue Solver</h4>
+                        <p>Report and track civic issues</p>
+                        <div class="reward-points">+100 points</div>
+                    </div>
+                    <div class="reward-card">
+                        <h4>Community Helper</h4>
+                        <p>Volunteer for social service</p>
+                        <div class="reward-points">+75 points</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Login to ClearCity</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="login-tabs">
+                    <button class="tab-button active" data-tab="citizen">Citizen</button>
+                    <button class="tab-button" data-tab="government">Government</button>
+                    <button class="tab-button" data-tab="student">Student</button>
+                </div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Login</button>
+                </form>
+                <p class="text-center">
+                    Don't have an account? <a href="#" id="register-link">Register here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="success-message" class="success-message hidden">
+        <div class="success-content">
+            <div class="success-icon">✓</div>
+            <div class="success-text">Action completed successfully!</div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Leaflet Routing Machine JS -->
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
